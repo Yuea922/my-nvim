@@ -7,13 +7,9 @@
 " ===
 " === Auto load for first time uses
 " ===
-if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
-	silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
+if empty(glob('~\AppData\Local\nvim\autoload\plug.vim'))
+	silent !curl -fLo ~\AppData\Local\nvim\autoload\plug.vim --create-dirs
 				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-if empty(glob($HOME.'/.config/nvim/plugged/wildfire.vim/autoload/wildfire.vim'))
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -21,11 +17,11 @@ endif
 " === Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location
 " ===
 let has_machine_specific_file = 1
-if empty(glob('~/.config/nvim/_machine_specific.vim'))
+if empty(glob('~\AppData\Local\nvim\_machine_specific.vim'))
 	let has_machine_specific_file = 0
-	silent! exec "!cp ~/.config/nvim/default_configs/_machine_specific_default.vim ~/.config/nvim/_machine_specific.vim"
+	silent! exec "!cp ~\AppData\Local\nvim\default_configs\_machine_specific_default.vim ~\AppData\Local\nvim\_machine_specific.vim"
 endif
-source $HOME/.config/nvim/_machine_specific.vim
+source ~\AppData\Local\nvim\_machine_specific.vim
 
 " ====================
 " === Editor Setup ===
@@ -33,11 +29,10 @@ source $HOME/.config/nvim/_machine_specific.vim
 " ===
 " === System
 " ===
-set clipboard=unnamedplus
+"set clipboard=unnamedplus
 let &t_ut=''
 set autochdir
 
-lua require('config.init')
 
 " ===
 " === Editor behavior
@@ -79,18 +74,19 @@ set completeopt=longest,noinsert,menuone,noselect,preview
 set ttyfast "should make scrolling faster
 set lazyredraw "same as above
 set visualbell
-silent !mkdir -p $HOME/.config/nvim/tmp/backup
-silent !mkdir -p $HOME/.config/nvim/tmp/undo
-"silent !mkdir -p $HOME/.config/nvim/tmp/sessions
-set backupdir=$HOME/.config/nvim/tmp/backup,.
-set directory=$HOME/.config/nvim/tmp/backup,.
+silent !mkdir C:\Users\NEWNEU\AppData\Local\nvim\tmp\backup
+silent !mkdir C:\Users\NEWNEU\AppData\Local\nvim\tmp\undo
+"silent !mkdir -p ~/.config/nvim/tmp/sessions
+set backupdir=~\AppData\Local\nvim\tmp\backup,.
+set directory=~\AppData\Local\nvim\tmp\backup,.
 if has('persistent_undo')
 	set undofile
-	set undodir=$HOME/.config/nvim/tmp/undo,.
+	set undodir=~\AppData\Local\nvim\tmp\undo,.
 endif
 set colorcolumn=100
 set updatetime=100
 set virtualedit=block
+set mouse=a
 
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -108,14 +104,14 @@ tnoremap <C-O> <C-\><C-N><C-O>
 " === Basic Mappings
 " ===
 let mapleader=" "
- 
+
 " Save & quit
 " noremap Q :q<CR>
 " noremap <C-q> :qa<CR>
 " noremap S :w<CR>
 
 " Open the vimrc file anytime
-noremap <LEADER>rc :e $HOME/.config/nvim/init.vim<CR>
+noremap <LEADER>rc :e ~\AppData\Local\nvim\init.vim<CR>
 noremap <LEADER>rv :e .nvimrc<CR>
 
 " make Y to copy till the end of the line
@@ -144,7 +140,7 @@ vnoremap <LEADER>tt :s/    /\t/g
 " Folding
 noremap <silent> <LEADER>o za
 
-nnoremap <c-n> :tabe<CR>:-tabmove<CR>:term lazynpm<CR>
+" nnoremap <c-n> :tabe<CR>:-tabmove<CR>:term lazynpm<CR>
 
 
 " ===
@@ -261,7 +257,7 @@ noremap tmk :+tabmove<CR>
 " === Markdown Settings
 " ===
 " Snippets
-source $HOME/.config/nvim/md-snippets.vim
+source ~\AppData\Local\nvim\md-snippets.vim
 " auto spell
 autocmd BufRead,BufNewFile *.md setlocal spell
 
@@ -282,7 +278,7 @@ noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 noremap <LEADER>sc :set spell!<CR>
 
 " Press ` to change case (instead of ~)
-noremap ` ~
+" noremap ` ~
 
 noremap <C-c> zz
 
@@ -307,8 +303,8 @@ map <F10> :call SynGroup()<CR>
 
 
 " shared paste
-vnoremap <leader>y :w! ~/.config/nvim/shared_pasteboard.vim<CR>
-noremap <leader>p :r! cat ~/.config/nvim/shared_pasteboard.vim<CR>
+vnoremap <leader>y :w! ~\AppData\Local\nvim\shared_pasteboard.vim<CR>
+noremap <leader>p :r! cat ~\AppData\Local\nvim\shared_pasteboard.vim<CR>
 
 " Compile function
 noremap r :call CompileRunGcc()<CR>
@@ -367,7 +363,7 @@ endfunc
 " === Install Plugins with Vim-Plug
 " ===
 
-call plug#begin('$HOME/.config/nvim/plugged')
+call plug#begin('~\AppData\Local\nvim\plugged')
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -389,10 +385,8 @@ Plug 'RRethy/vim-illuminate'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
-Plug 'kevinhwang91/rnvimr'
 Plug 'airblade/vim-rooter'
 Plug 'pechorin/any-jump.vim'
-Plug 'simrat39/symbols-outline.nvim'
 
 " Taglist
 Plug 'liuchengxu/vista.vim'
@@ -433,7 +427,7 @@ Plug 'pantharshit00/vim-prisma'
 
 " Python
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins'}
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
 Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
 
 " Flutter
@@ -448,24 +442,12 @@ Plug 'dkarter/bullets.vim'
 " Editor Enhancement
 Plug 'jiangmiao/auto-pairs'
 " Plug 'mg979/vim-visual-multi'
-Plug 'tomtom/tcomment_vim' " in <space>cn to comment a line
+" Plug 'tomtom/tcomment_vim' " in <space>cn to comment a line
 Plug 'theniceboy/antovim' " gs to switch
 Plug 'tpope/vim-surround' " type ysiw' to wrap the word with '' or type cs'` to change 'word' to `word`
 Plug 'gcmt/wildfire.vim' " in Visual mode, type k' to select all text in '', or type k) k] k} kp
 Plug 'junegunn/vim-after-object' " da= to delete what's after =
 Plug 'godlygeek/tabular' " ga, or :Tabularize <regex> to align
-" Plug 'tpope/vim-capslock'	" Ctrl+L (insert) to toggle capslock
-" Plug 'easymotion/vim-easymotion'
-" Plug 'Konfekt/FastFold'
-"Plug 'junegunn/vim-peekaboo'
-"Plug 'wellle/context.vim'
-" Plug 'svermeulen/vim-subversive'
-" Plug 'theniceboy/argtextobj.vim'
-" Plug 'rhysd/clever-f.vim'
-" Plug 'AndrewRadev/splitjoin.vim'
-" Plug 'theniceboy/pair-maker.vim'
-" Plug 'theniceboy/vim-move'
-" Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'Yggdroot/indentLine'
 
 " Bookmarks
@@ -475,7 +457,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }
 
 " Mini Vim-APP
-Plug 'mhinz/vim-startify'
+" Plug 'mhinz/vim-startify'
 Plug 'mhinz/vim-startify', {'branch': 'center'} 
 
 " Vim Applications
@@ -485,13 +467,13 @@ Plug 'itchyny/calendar.vim'
 Plug 'luochen1990/rainbow'
 Plug 'mg979/vim-xtabline'
 Plug 'ryanoasis/vim-devicons'
-Plug 'wincent/terminus'
+" Plug 'wincent/terminus'
 
 " file type from context
 " Plug 'Shougo/context_filetype.vim'
 " auto comment
 " Plug 'tyru/caw.vim'
-" Plug 'tomtom/tcomment_vim' " in <space>cn to comment a line
+Plug 'tomtom/tcomment_vim' " in <space>cn to comment a line
 
 " Other useful utilities
 " Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
@@ -511,7 +493,7 @@ set lazyredraw
 " ===
 " === Dress up my vim
 " ===
-" set termguicolors " enable true colors support
+set termguicolors " enable true colors support
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 "let g:one_allow_italics = 1
 
@@ -534,7 +516,7 @@ hi NonText ctermfg=gray guifg=grey10
 " ===
 " === eleline.vim
 " ===
-" let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 0
 
 
 " ==
@@ -561,65 +543,55 @@ nnoremap <LEADER>g= :GitGutterNextHunk<CR>
 " === coc.nvim
 " ===
 let g:coc_global_extensions = [
-            \ 'coc-clangd',
-            \ 'coc-cmake',
-            \ 'coc-css',
-            \ 'coc-diagnostic',
-            \ 'coc-docker',
-            \ 'coc-eslint',
-            \ 'coc-explorer',
-            \ 'coc-flutter-tools',
-            \ 'coc-gitignore',
-            \ 'coc-html',
-            \ 'coc-import-cost',
-            \ 'coc-java',
-            \ 'coc-jest',
-            \ 'coc-json',
-            \ 'coc-lists',
-            \ 'coc-omnisharp',
-            \ 'coc-prettier',
-            \ 'coc-prisma',
-            \ 'coc-pyright',
-            \ 'coc-snippets',
-            \ 'coc-sourcekit',
-            \ 'coc-stylelint',
-            \ 'coc-syntax',
-            \ 'coc-tailwindcss',
-            \ 'coc-tasks',
-            \ 'coc-translator',
-            \ 'coc-tsserver',
-            \ 'coc-vetur',
-            \ 'coc-vimlsp',
-            \ 'coc-yaml']
-" inoremap <silent><expr> <TAB>
-" 	\ pumvisible() ? "\<C-n>" :
-" 	\ <SID>check_back_space() ? "\<TAB>" :
-" 	\ coc#refresh()
+	\ 'coc-clangd',
+	\ 'coc-cmake',
+	\ 'coc-css',
+	\ 'coc-diagnostic',
+	\ 'coc-docker',
+	\ 'coc-eslint',
+	\ 'coc-explorer',
+	\ 'coc-flutter-tools',
+	\ 'coc-gitignore',
+	\ 'coc-html',
+	\ 'coc-import-cost',
+	\ 'coc-java',
+	\ 'coc-jest',
+	\ 'coc-json',
+	\ 'coc-lists',
+	\ 'coc-omnisharp',
+	\ 'coc-prettier',
+	\ 'coc-prisma',
+	\ 'coc-pyright',
+	\ 'coc-snippets',
+	\ 'coc-sourcekit',
+	\ 'coc-stylelint',
+	\ 'coc-syntax',
+	\ 'coc-tailwindcss',
+	\ 'coc-tasks',
+	\ 'coc-translator',
+	\ 'coc-tsserver',
+	\ 'coc-vetur',
+	\ 'coc-vimlsp',
+	\ 'coc-yaml',]
 inoremap <silent><expr> <TAB>
-            \ coc#pum#visible() ? coc#pum#next(1) :
-            \ CheckBackspace() ? "\<Tab>" :
-            \ coc#refresh()
-function! CheckBackspace() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+	\ pumvisible() ? "\<C-n>" :
+	\ <SID>check_back_space() ? "\<TAB>" :
+	\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-" function! s:check_back_space() abort
-" 	let col = col('.') - 1
-" 	return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <c-o> coc#refresh()
 function! Show_documentation()
-    call CocActionAsync('highlight')
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    else
-        call CocAction('doHover')
-    endif
+	call CocActionAsync('highlight')
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	else
+		call CocAction('doHover')
+	endif
 endfunction
 nnoremap <LEADER>sd :call Show_documentation()<CR>
 
@@ -653,7 +625,7 @@ nmap tt :CocCommand explorer<CR>
 nmap ts <Plug>(coc-translator-p)
 " Remap for do codeAction of selected region
 function! s:cocActionsOpenFromSelected(type) abort
-    execute 'CocCommand actions.open ' . a:type
+  execute 'CocCommand actions.open ' . a:type
 endfunction
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>aw  <Plug>(coc-codeaction-selected)w
@@ -673,15 +645,15 @@ let g:snips_author = 'qzy'
 autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
 
 function! s:generate_compile_commands()
-    if empty(glob('CMakeLists.txt'))
-        echo "Can't find CMakeLists.txt"
-        return
-    endif
-    if empty(glob('build'))
-        execute 'silent !mkdir build'
-    endif
-    execute '!cmake -DCMAKE_BUILD_TYPE=debug
-                \ -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -S . -B build'
+  if empty(glob('CMakeLists.txt'))
+    echo "Can't find CMakeLists.txt"
+    return
+  endif
+  if empty(glob('build'))
+    execute 'silent !mkdir build'
+  endif
+	execute '!cmake -DCMAKE_BUILD_TYPE=debug
+			\ -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -S . -B build'
 endfunction
 command! -nargs=0 Gcmake :call s:generate_compile_commands()
 
@@ -721,21 +693,21 @@ let g:fzf_preview_window = 'right:60%'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 function! s:list_buffers()
-    redir => list
-    silent ls
-    redir END
-    return split(list, "\n")
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
 endfunction
 
 function! s:delete_buffers(lines)
-    execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
 endfunction
 
 command! BD call fzf#run(fzf#wrap({
-            \ 'source': s:list_buffers(),
-            \ 'sink*': { lines -> s:delete_buffers(lines) },
-            \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
-            \ }))
+  \ 'source': s:list_buffers(),
+  \ 'sink*': { lines -> s:delete_buffers(lines) },
+  \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
+\ }))
 
 noremap <C-d> :BD<CR>
 
@@ -751,15 +723,15 @@ let g:Lf_PreviewCode = 1
 let g:Lf_ShowHidden = 1
 let g:Lf_ShowDevIcons = 1
 let g:Lf_CommandMap = {
-            \   '<C-]>': ['<C-v>'],
-            \   '<C-p>': ['<C-n>'],
-            \}
+\   '<C-]>': ['<C-v>'],
+\   '<C-p>': ['<C-n>'],
+\}
 let g:Lf_UseVersionControlTool = 0
 let g:Lf_IgnoreCurrentBufferName = 1
 let g:Lf_WildIgnore = {
-            \ 'dir': ['.git', 'vendor', 'node_modules'],
-            \ 'file': ['__vim_project_root', 'class']
-            \}
+        \ 'dir': ['.git', 'vendor', 'node_modules'],
+        \ 'file': ['__vim_project_root', 'class']
+        \}
 let g:Lf_UseMemoryCache = 0
 let g:Lf_UseCache = 0
 
@@ -774,18 +746,18 @@ let g:undotree_WindowLayout = 2
 let g:undotree_DiffpanelHeight = 8
 let g:undotree_SplitWidth = 24
 function g:Undotree_CustomMap()
-    nmap <buffer> u <plug>UndotreeNextState
-    nmap <buffer> e <plug>UndotreePreviousState
-    nmap <buffer> U 5<plug>UndotreeNextState
-    nmap <buffer> E 5<plug>UndotreePreviousState
+	nmap <buffer> u <plug>UndotreeNextState
+	nmap <buffer> e <plug>UndotreePreviousState
+	nmap <buffer> U 5<plug>UndotreeNextState
+	nmap <buffer> E 5<plug>UndotreePreviousState
 endfunc
 
 " === Far.vim
 " ===
 noremap <LEADER>f :F  **/*<left><left><left><left><left>
 let g:far#mapping = {
-            \ "replace_undo" : ["l"],
-            \ }
+		\ "replace_undo" : ["l"],
+		\ }
 
 
 
@@ -794,11 +766,11 @@ let g:far#mapping = {
 " ===
 " let g:bullets_set_mappings = 0
 let g:bullets_enabled_file_types = [
-            \ 'markdown',
-            \ 'text',
-            \ 'gitcommit',
-            \ 'scratch'
-            \]
+			\ 'markdown',
+			\ 'text',
+			\ 'gitcommit',
+			\ 'scratch'
+			\]
 
 
 " ===
@@ -811,9 +783,9 @@ let g:vista_default_executive = 'coc'
 let g:vista_fzf_preview = ['right:50%']
 let g:vista#renderer#enable_icon = 1
 let g:vista#renderer#icons = {
-            \   "function": "\uf794",
-            \   "variable": "\uf71b",
-            \  }
+\   "function": "\uf794",
+\   "variable": "\uf71b",
+\  }
 
 let g:scrollstatus_size = 15
 
@@ -832,21 +804,21 @@ noremap \\ :Calendar -view=clock -position=here<CR>
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 augroup calendar-mappings
-    autocmd!
-    " diamond cursor
-    autocmd FileType calendar nmap <buffer> k <Plug>(calendar_up)
-    autocmd FileType calendar nmap <buffer> h <Plug>(calendar_left)
-    autocmd FileType calendar nmap <buffer> j <Plug>(calendar_down)
-    autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
-    autocmd FileType calendar nmap <buffer> <C-k> <Plug>(calendar_move_up)
-    autocmd FileType calendar nmap <buffer> <C-h> <Plug>(calendar_move_left)
-    autocmd FileType calendar nmap <buffer> <C-j> <Plug>(calendar_move_down)
-    autocmd FileType calendar nmap <buffer> <C-l> <Plug>(calendar_move_right)
-    autocmd FileType calendar nmap <buffer> i <Plug>(calendar_start_insert)
-    autocmd FileType calendar nmap <buffer> I <Plug>(calendar_start_insert_head)
-    " unmap <C-n>, <C-p> for other plugins
-    autocmd FileType calendar nunmap <buffer> <C-n>
-    autocmd FileType calendar nunmap <buffer> <C-p>
+	autocmd!
+	" diamond cursor
+	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_up)
+	autocmd FileType calendar nmap <buffer> h <Plug>(calendar_left)
+	autocmd FileType calendar nmap <buffer> j <Plug>(calendar_down)
+	autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
+	autocmd FileType calendar nmap <buffer> <C-k> <Plug>(calendar_move_up)
+	autocmd FileType calendar nmap <buffer> <C-h> <Plug>(calendar_move_left)
+	autocmd FileType calendar nmap <buffer> <C-j> <Plug>(calendar_move_down)
+	autocmd FileType calendar nmap <buffer> <C-l> <Plug>(calendar_move_right)
+	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_start_insert)
+	autocmd FileType calendar nmap <buffer> I <Plug>(calendar_start_insert_head)
+	" unmap <C-n>, <C-p> for other plugins
+	autocmd FileType calendar nunmap <buffer> <C-n>
+	autocmd FileType calendar nunmap <buffer> <C-p>
 augroup END
 
 let g:coc_sources_disable_map = { 'cs': ['cs', 'cs-1', 'cs-2', 'cs-3'] }
@@ -910,7 +882,7 @@ let g:startify_lists = [
          \ { 'type': 'commands',  'header': startify#center(['   Commands'])       },
          \ ]
 let g:startify_bookmarks = [
-            \ { 'n': '~/.config/nvim/init.vim' },
+            \ { 'n': '~\AppData\Local\nvim\init.vim' },
             \ { 'z': '~/.zshrc'},
             \ ]
 let g:startify_padding_left = 68 " Hard coded padding for lists
@@ -964,8 +936,8 @@ vmap <LEADER>ch g>
 nmap <LEADER>cu g<c
 vmap <LEADER>cu g<
 nmap <LEADER>cb g>b
-imap <leader>ch <esc>g>ci
-imap <leader>cu <esc>g<i
+" imap <leader>ch <esc>g>ci
+" imap <leader>cu <esc>g<i
 
 
 " ===
@@ -1033,31 +1005,11 @@ let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
 " ===================== End of Plugin Settings =====================
 
 " ===
-" === Terminal Colors
-" ===
-
-" let g:terminal_color_0  = '#000000'
-" let g:terminal_color_1  = '#FF5555'
-" let g:terminal_color_2  = '#50FA7B'
-" let g:terminal_color_3  = '#F1FA8C'
-" let g:terminal_color_4  = '#BD93F9'
-" let g:terminal_color_5  = '#FF79C6'
-" let g:terminal_color_6  = '#8BE9FD'
-" let g:terminal_color_7  = '#BFBFBF'
-" let g:terminal_color_8  = '#4D4D4D'
-" let g:terminal_color_9  = '#FF6E67'
-" let g:terminal_color_10 = '#5AF78E'
-" let g:terminal_color_11 = '#F4F99D'
-" let g:terminal_color_12 = '#CAA9FA'
-" let g:terminal_color_13 = '#FF92D0'
-" let g:terminal_color_14 = '#9AEDFE'
-
-" ===
 " === Necessary Commands to Execute
 " ===
 exec "nohlsearch"
 
 " Open the _machine_specific.vim file if it has just been created
 if has_machine_specific_file == 0
-	exec "e ~/.config/nvim/_machine_specific.vim"
-endif
+	exec "e ~\AppData\Local\nvim\_machine_specific.vim"
+end
